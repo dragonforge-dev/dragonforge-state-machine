@@ -10,6 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Dragonforge State Machine"
+config/name="Dragonforge State Machine v0.1"
+config/description="A base state machine class to be used in games."
+config/version="0.1"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://21nwk3mbrenq"
