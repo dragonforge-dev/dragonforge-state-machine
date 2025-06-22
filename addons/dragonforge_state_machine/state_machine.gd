@@ -56,10 +56,10 @@ func start() -> void:
 		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine has no States! Failed to start!" % [_owner.name])
 		return
 	
+	is_running = true
+	
 	if starting_state:
 		starting_state._enter_state()
-	
-	is_running = true
 
 
 ## Stops the [StateMachine] from running. Stops the current [State] if one is
