@@ -80,7 +80,9 @@ func stop() -> void:
 ## 3. The current [State] won't allow a transition to happen because its [member State.can_transition] = false.[br]
 ## 4. The target [State] won't allow a transition to happen because its [member State.can_transition] = false (e.g. cooldown timers).
 func switch_state(state: State) -> void:
-	if not is_running: return # The StateMachine is not running.
+	if not is_running:
+		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine is off! Cannot enter %s!" % [_owner.name, state.name])
+		return # The StateMachine is not running.
 	if not _machine_has_state(state): return # The StateMachine does not have the passed state.
 	if _current_state == state: return # The StateMachine is already in that state.
 	if not state.can_transition: return # The target State won't allow a transition to happen (e.g. cooldown timers).
