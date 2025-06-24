@@ -17,9 +17,9 @@ var can_transition = true
 var _state_machine: StateMachine
 # Used when deactivating a state and the [StateMachine] has already been deleted.
 var _state_machine_name: String
-# The name of the parent node of the state_machine. Stored for logging purposes.
+# The name of the parent node of the StateMachine. Stored for logging purposes.
 # NOTE: This is not guaranteed to be the same as get_owner().name
-var _owner_name: String
+var _subject_name: String
 
 
 func _ready() -> void:
@@ -50,8 +50,8 @@ func is_current_state() -> bool:
 func _activate_state() -> void:
 	_state_machine = get_parent()
 	_state_machine_name = _state_machine.name
-	_owner_name = _state_machine.get_parent().name
-	print_rich("[color=forest_green][b]Activate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_owner_name, _state_machine_name, self.name])
+	_subject_name = _state_machine.subject.name
+	print_rich("[color=forest_green][b]Activate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_subject_name, _state_machine_name, self.name])
 
 
 ## Called when a [State] is removed from a [StateMachine].
@@ -59,7 +59,7 @@ func _activate_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _deactivate_state() -> void:
-	print_rich("[color=#d42c2a][b]Deactivate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_owner_name, _state_machine_name, self.name])
+	print_rich("[color=#d42c2a][b]Deactivate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_subject_name, _state_machine_name, self.name])
 
 
 ## Called every time the [State] is entered.
@@ -67,7 +67,7 @@ func _deactivate_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _enter_state() -> void:
-	print_rich("[color=deep_sky_blue][b]Enter[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_owner_name, _state_machine_name, self.name])
+	print_rich("[color=deep_sky_blue][b]Enter[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_subject_name, _state_machine_name, self.name])
 
 
 ## Called every time the [State] is exited.
@@ -75,4 +75,4 @@ func _enter_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _exit_state() -> void:
-	print_rich("[color=dark_orange][b]Exit[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_owner_name, _state_machine_name, self.name])
+	print_rich("[color=dark_orange][b]Exit[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] %s" % [_subject_name, _state_machine_name, self.name])

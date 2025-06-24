@@ -2,7 +2,7 @@
 
 # Dragonforge State Machine
 A base state machine class to be used in games.
-# Version 0.1.2
+# Version 0.2
 For use with **Godot 4.4.1-stable** and later.
 # Installation Instructions
 1. Copy the **dragonforge_state_machine** folder from the **addons** folder into your project's **addons** folder.
@@ -23,3 +23,11 @@ To use the **StateMachine** and **State** classes, you add a **StateMachine** to
 2. Type `state` into the Search box.
 3. Select **State**.
 4. Click the **Create** button.
+
+## CharacterState
+1. Add a new node as you would normally. (The **Create New Node** window will appear.)
+2. Type `state` into the Search box.
+3. Select **CharacterState**.
+4. Click the **Create** button.
+
+This state differs from **State** in that it adds a `character` member which is the `subject` (parent) of the **StateMachine**.

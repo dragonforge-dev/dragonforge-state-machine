@@ -14,8 +14,8 @@ class_name StateMachine extends Node
 ## If this value is false, this [StateMachine] will not change states. It is
 ## initially set to true once the [StateMachine] is fully constructed.
 var is_running = false
-# The node this StateMachine is attached. Not the same as a call to get_owner().
-var _owner
+## The node to which this [StateMachine] is attached and operates on.
+var subject: Node
 
 # The current State of the StateMachine. Initially defaults to the first node it
 # finds beneath itself if starting_state is not defined.
@@ -25,7 +25,7 @@ var _owner
 # Guarantees this gets run if the node is added after it has been made, or is
 # reparented.
 func _enter_tree() -> void:
-	_owner = get_parent()
+	subject = get_parent()
 
 
 # Sets up every [State] for this [StateMachine], and monitors any [State] being
@@ -35,7 +35,7 @@ func _ready() -> void:
 	# Keep intitalization from happening until the parent and all its dependants are constructed.
 	# This prevents race conditions from happening where a State needs to reference things that
 	# do not exist yet.
-	_owner.ready.connect(_on_ready)
+	subject.ready.connect(_on_ready)
 
 
 func _on_ready() -> void:
@@ -53,7 +53,7 @@ func _on_ready() -> void:
 ## restarted with [method StateMachine.start].
 func start() -> void:
 	if get_child_count() <= 0:
-		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine has no States! Failed to start!" % [_owner.name])
+		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine has no States! Failed to start!" % [subject.name])
 		return
 	
 	is_running = true
@@ -82,7 +82,7 @@ func stop() -> void:
 ## 4. The target [State] won't allow a transition to happen because its [member State.can_transition] = false (e.g. cooldown timers).
 func switch_state(state: State) -> void:
 	if not is_running:
-		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine is off! Cannot enter %s!" % [_owner.name, state.name])
+		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine is off! Cannot enter %s!" % [subject.name, state.name])
 		return # The StateMachine is not running.
 	if not _machine_has_state(state): return # The StateMachine does not have the passed state.
 	if _current_state == state: return # The StateMachine is already in that state.
