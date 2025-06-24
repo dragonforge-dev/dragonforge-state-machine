@@ -1,5 +1,5 @@
 ## State for a Character (Player/NPC/Enemy
-class_name CharacterStateMachine extends State
+class_name CharacterState extends State
 
 ## The Character this CharacterState operates on.
 var character: Node
