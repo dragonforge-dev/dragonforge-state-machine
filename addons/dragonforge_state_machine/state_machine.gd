@@ -59,7 +59,8 @@ func start() -> void:
 	is_running = true
 	
 	if starting_state:
-		starting_state._enter_state()
+		_current_state = starting_state
+		_current_state._enter_state()
 
 
 ## Stops the [StateMachine] from running. Stops the current [State] if one is

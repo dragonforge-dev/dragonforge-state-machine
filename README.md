@@ -2,7 +2,7 @@
 
 # Dragonforge State Machine
 A base state machine class to be used in games.
-# Version 0.1.1
+# Version 0.1.2
 For use with **Godot 4.4.1-stable** and later.
 # Installation Instructions
 1. Copy the **dragonforge_state_machine** folder from the **addons** folder into your project's **addons** folder.
