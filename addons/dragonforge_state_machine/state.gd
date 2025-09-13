@@ -22,6 +22,10 @@ var _state_machine_name: String
 var _subject_name: String
 
 
+## Turns off the _process(), _phsyics_process(), _input() and _unhandled_input()
+## functions. If you want to use them for a [State] you can turn them on in the
+## _activate_state() function, or turned on and off in _enter_state() and
+## _exit_state()
 func _ready() -> void:
 	set_process(false)
 	set_physics_process(false)
