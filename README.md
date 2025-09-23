@@ -1,9 +1,9 @@
-[![Static Badge](https://img.shields.io/badge/Godot%20Engine-4.5.rc2-blue?style=plastic&logo=godotengine)](https://godotengine.org/)
+[![Static Badge](https://img.shields.io/badge/Godot%20Engine-4.5.stable-blue?style=plastic&logo=godotengine)](https://godotengine.org/)
 
 # Dragonforge State Machine
 A base state machine class to be used in games.
 # Version 0.4
-For use with **Godot 4.5.rc2** and later.
+For use with **Godot 4.5.stable** and later.
 # Installation Instructions
 1. Copy the `dragonforge_state_machine` folder from the `addons` folder into your project's `addons` folder.
 2. In your project go to **Project -> Reload Current Project**
