@@ -28,7 +28,7 @@ To use the **StateMachine** and **State** classes, you add a **StateMachine** to
 ## StateMachine
 While there are a number of public functions, this class is not intended to be changed or operated directly. All state switching happens from the **State** class.
 
-Shits state amchine is intended to be a "pull" machine instead of a "push" machine. Based on the Kanban principle of only pulling work when it's available. This means that instead of the **StateMachine** telling classes when they take over, the **State** class is implemented to tell the **StateMachine** when it wants to start up. This means that all the logic for switching is stored in the **State**. This keeps states modular, and means you can add or remove them from a **StateMachine** without breaking anything or having to rewrite code.
+This state machine is intended to be a "pull" machine instead of a "push" machine. Based on the Kanban principle of only pulling work when it's available. This means that instead of the **StateMachine** telling classes when they take over, the **State** class is implemented to tell the **StateMachine** when it wants to start up. This means that all the logic for switching is stored in the **State**. This keeps states modular, and means you can add or remove them from a **StateMachine** without breaking anything or having to rewrite code.
 
 As such, even though there are public methods and variables, they are meant to only be accessed by **State** nodes. If there was a `protected` scope, StateMachine would fall into that scope - only accessible by **State**. So there is no documentation on how to use it because you are not supposed to use it. If you are curious how it works, the code is well-documented.
 
