@@ -55,7 +55,8 @@ func _activate_state() -> void:
 	_state_machine = get_parent()
 	_state_machine_name = _state_machine.name
 	_subject_name = _state_machine.subject.name
-	print_rich("[color=forest_green][b]Activate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=forest_green]%s[/color]" % [_subject_name, _state_machine_name, self.name])
+	if _state_machine.print_state_changes:
+		print_rich("[color=forest_green][b]Activate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=forest_green]%s[/color]" % [_subject_name, _state_machine_name, self.name])
 
 
 ## Called when a [State] is removed from a [StateMachine].
@@ -63,7 +64,8 @@ func _activate_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _deactivate_state() -> void:
-	print_rich("[color=#d42c2a][b]Deactivate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=#d42c2a]%s[/color]" % [_subject_name, _state_machine_name, self.name])
+	if _state_machine.print_state_changes:
+		print_rich("[color=#d42c2a][b]Deactivate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=#d42c2a]%s[/color]" % [_subject_name, _state_machine_name, self.name])
 
 
 ## Called every time the [State] is entered.
@@ -71,7 +73,8 @@ func _deactivate_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _enter_state() -> void:
-	print_rich("[color=deep_sky_blue][b]Enter[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=deep_sky_blue]%s[/color]" % [_subject_name, _state_machine_name, self.name])
+	if _state_machine.print_state_changes:
+		print_rich("[color=deep_sky_blue][b]Enter[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=deep_sky_blue]%s[/color]" % [_subject_name, _state_machine_name, self.name])
 
 
 ## Called every time the [State] is exited.
@@ -79,4 +82,31 @@ func _enter_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _exit_state() -> void:
-	print_rich("[color=dark_orange][b]Exit[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=dark_orange]%s[/color]" % [_subject_name, _state_machine_name, self.name])
+	if _state_machine.print_state_changes:
+		print_rich("[color=dark_orange][b]Exit[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=dark_orange]%s[/color]" % [_subject_name, _state_machine_name, self.name])
+
+
+## Adds an argument [param arg] to the [member StateMachine._args] [Dictionary]
+## with value [param value] that can be used for communication
+## between [State]s.
+func set_arg(arg: StringName, value: bool = true) -> void:
+	_state_machine.set_arg(arg, value)
+
+
+## Removes an argument [param arg] from the [member StateMachine._args]
+## [Dictionary].
+func remove_arg(arg: StringName) -> void:
+	_state_machine.remove_arg(arg)
+
+
+## Returns an argument [param arg] from the [member StateMachine._args]
+## [Dictionary], or [code]false[/code] if the argument doesn't exist
+## in the [member StateMachine._args].
+func get_arg(arg: StringName) -> bool:
+	return _state_machine.get_arg(arg)
+
+
+## Returns [code]true[/code] or [code]false[/code] respectively if an argument
+## [param arg] exists in the [member StateMachine._args] [Dictionary].
+func has_arg(arg: StringName) -> bool:
+	return _state_machine.has_arg(arg)
