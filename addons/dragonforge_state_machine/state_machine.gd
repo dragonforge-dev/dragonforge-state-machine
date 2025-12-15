@@ -185,11 +185,5 @@ func remove_arg(arg: StringName) -> void:
 
 ## Returns an argument [param arg] from the [member _args] [Dictionary],
 ## or [code]false[/code] if the argument doesn't exist in the [member _args].
-func get_arg(arg: StringName) -> bool:
+func is_arg(arg: StringName) -> bool:
 	return _args.get(arg, false)
-
-
-## Returns [code]true[/code] or [code]false[/code] respectively if an argument
-## [param arg] exists in the [member _args] [Dictionary].
-func has_arg(arg: StringName) -> bool:
-	return _args.has(arg)

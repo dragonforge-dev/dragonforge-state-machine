@@ -102,11 +102,5 @@ func remove_arg(arg: StringName) -> void:
 ## Returns an argument [param arg] from the [member StateMachine._args]
 ## [Dictionary], or [code]false[/code] if the argument doesn't exist
 ## in the [member StateMachine._args].
-func get_arg(arg: StringName) -> bool:
+func is_arg(arg: StringName) -> bool:
 	return _state_machine.get_arg(arg)
-
-
-## Returns [code]true[/code] or [code]false[/code] respectively if an argument
-## [param arg] exists in the [member StateMachine._args] [Dictionary].
-func has_arg(arg: StringName) -> bool:
-	return _state_machine.has_arg(arg)
