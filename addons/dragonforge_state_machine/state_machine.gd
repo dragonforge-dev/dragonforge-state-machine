@@ -6,16 +6,33 @@
 @icon("res://addons/dragonforge_state_machine/assets/icons/state_machine_64x64.png")
 class_name StateMachine extends Node
 
+
+## Emitted when [member _current_state] is changed.
+signal state_changed
+
+
 ## The initial [State] for the [StateMachine]. This can be left blank, in which
 ## case the [StateMachine] will typically transition when the first [State] that
 ## is triggered calls [method State.switch_state]
 @export var starting_state: State
+
+## By default, the [StateMachine] is started automatically, unless this flag is 
+## turned off. In such case, to start the [StateMachine] manually, both
+## [method initialize] and [method start] need to be called.
+@export var autostart: bool = true
+
+## By default, [State] status changes are printed to the console,
+## unless this flag is turned off.
+@export var print_state_changes: bool = true
 
 ## If this value is false, this [StateMachine] will not change states. It is
 ## initially set to true once the [StateMachine] is fully constructed.
 var is_running = false
 ## The node to which this [StateMachine] is attached and operates on.
 var subject: Node
+
+# Holds arguments that can be used for communication between States.
+var _args: Dictionary[StringName, bool]
 
 # The current State of the StateMachine. Initially defaults to the first node it
 # finds beneath itself if starting_state is not defined.
@@ -39,13 +56,19 @@ func _ready() -> void:
 
 
 func _on_ready() -> void:
+	if not autostart: return
+	initialize()
+	start()
+
+
+## Initializes signals and activates states.[br]
+## Needs to be called before [method StateMachine.start].
+func initialize() -> void:
 	for state in get_children():
 		if state is State:
 			state._activate_state()
 	self.connect("child_entered_tree", _on_state_added)
 	self.connect("child_exiting_tree", _on_state_removed)
-	
-	start()
 
 
 ## Starts the [StateMachine] running. All machines start automatically, but
@@ -94,6 +117,7 @@ func switch_state(state: State) -> void:
 	
 	_current_state = state # Assign the new state we are transitioning to as the current state.
 	_current_state._enter_state() # Run the enter code for the new current state.
+	state_changed.emit()
 
 
 ## Should ideally be called from [method State.is_current_state][br][br]
@@ -129,3 +153,37 @@ func _on_state_removed(node: Node) -> void:
 	if not node is State:
 		return
 	node._deactivate_state()
+
+
+## Adds [param state] as a child to the [StateMachine]
+## and immediately activates it.
+func add_state(state: State) -> void:
+	if state.get_parent() == null:
+		add_child(state)
+	else:
+		state.reparent(self)
+
+
+## Removes [param state] from the [StateMachine]
+## and immediately deactivates it.
+func remove_state(state: State) -> void:
+	if state.get_parent() == self:
+		remove_child(state)
+
+
+## Adds an argument [param arg] to the [member _args] [Dictionary]
+## with value [param value] that can be used for communication
+## between [State]s.
+func set_arg(arg: StringName, value: bool = true) -> void:
+	_args[arg] = value
+
+
+## Removes an argument [param arg] from the [member _args] [Dictionary].
+func remove_arg(arg: StringName) -> void:
+	_args.erase(arg)
+
+
+## Returns an argument [param arg] from the [member _args] [Dictionary],
+## or [code]false[/code] if the argument doesn't exist in the [member _args].
+func is_arg(arg: StringName) -> bool:
+	return _args.get(arg, false)
