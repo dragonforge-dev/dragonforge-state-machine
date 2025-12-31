@@ -6,7 +6,7 @@
 ## - unhandled_input()[br]
 ## If you want to turn any of these on, do so in [method State._activate_state].
 ## Be sure to call [method super] on the first line of your method.
-@icon("res://addons/dragonforge_state_machine/assets/icons/state_icon_64x64_white.png")
+@icon("res://addons/dragonforge_state_machine/assets/textures/icons/state_icon_64x64_white.png")
 class_name State extends Node
 
 ## Set to false if this [State] cannot be transitioned to (or alternately, from).

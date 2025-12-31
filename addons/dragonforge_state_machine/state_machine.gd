@@ -3,13 +3,11 @@
 ## [StateMachine]. Ideally a [StateMachine] should never call its own methods,
 ## instead being driven by a [State] changing and calling its own helper methods
 ## to switch state.
-@icon("res://addons/dragonforge_state_machine/assets/icons/state_machine_64x64.png")
+@icon("res://addons/dragonforge_state_machine/assets/textures/icons/state_machine_64x64.png")
 class_name StateMachine extends Node
-
 
 ## Emitted when [member _current_state] is changed.
 signal state_changed
-
 
 ## The initial [State] for the [StateMachine]. This can be left blank, in which
 ## case the [StateMachine] will typically transition when the first [State] that
@@ -125,36 +123,6 @@ func switch_state(state: State) -> void:
 func is_current_state(state: State) -> bool:
 	return _current_state == state
 
-
-# Returns whether or not the StateMachine has this state.
-# (A StateMachine has a state if the state is a child node of the StateMachine.)
-func _machine_has_state(state: State) -> bool:
-	for element in get_children():
-		if element == state:
-			return true
-	return false
-
-
-# Activates a state.
-# (Called when a node enters the tree as a child node of this StateMachine.)
-# Accepts all nodes as an argument because this is called whenever a child node
-# enters the tree.
-func _on_state_added(node: Node) -> void:
-	if not node is State:
-		return
-	node._activate_state()
-
-
-# Deactivates a state.
-# (Called when a child node of this StateMachine leaves the tree.)
-# Accepts all nodes as an argument because this is called whenever a child node
-# exits the tree.
-func _on_state_removed(node: Node) -> void:
-	if not node is State:
-		return
-	node._deactivate_state()
-
-
 ## Adds [param state] as a child to the [StateMachine]
 ## and immediately activates it.
 func add_state(state: State) -> void:
@@ -187,3 +155,32 @@ func remove_arg(arg: StringName) -> void:
 ## or [code]false[/code] if the argument doesn't exist in the [member _args].
 func is_arg(arg: StringName) -> bool:
 	return _args.get(arg, false)
+
+
+# Returns whether or not the StateMachine has this state.
+# (A StateMachine has a state if the state is a child node of the StateMachine.)
+func _machine_has_state(state: State) -> bool:
+	for element in get_children():
+		if element == state:
+			return true
+	return false
+
+
+# Activates a state.
+# (Called when a node enters the tree as a child node of this StateMachine.)
+# Accepts all nodes as an argument because this is called whenever a child node
+# enters the tree.
+func _on_state_added(node: Node) -> void:
+	if not node is State:
+		return
+	node._activate_state()
+
+
+# Deactivates a state.
+# (Called when a child node of this StateMachine leaves the tree.)
+# Accepts all nodes as an argument because this is called whenever a child node
+# exits the tree.
+func _on_state_removed(node: Node) -> void:
+	if not node is State:
+		return
+	node._deactivate_state()
