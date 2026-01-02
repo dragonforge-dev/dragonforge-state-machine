@@ -29,7 +29,7 @@ signal state_changed
 
 ## By default, [State] status changes are printed to the console,
 ## unless this flag is turned off.
-@export var print_state_changes: bool = false
+@export var print_state_changes: bool = true
 
 ## If this value is false, this [StateMachine] will not change states. It is
 ## initially set to true once the [StateMachine] is fully constructed.
