@@ -9,6 +9,11 @@
 @icon("res://addons/dragonforge_state_machine/assets/icons/state_icon_64x64_white.png")
 class_name State extends Node
 
+
+## By default, the [State] is activated automatically, unless this flag is 
+## turned off.
+@export var activate_on_start: bool = true
+
 ## Set to false if this [State] cannot be transitioned to (or alternately, from).
 ## For example when waiting for a cooldown timer to expire, when a
 ## character is dead, or when the splash screens have been completed.
@@ -64,6 +69,7 @@ func _activate_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _deactivate_state() -> void:
+	if not _state_machine: return
 	if _state_machine.print_state_changes:
 		print_rich("[color=#d42c2a][b]Deactivate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=#d42c2a]%s[/color]" % [_subject_name, _state_machine_name, self.name])
 
@@ -103,4 +109,4 @@ func remove_arg(arg: StringName) -> void:
 ## [Dictionary], or [code]false[/code] if the argument doesn't exist
 ## in the [member StateMachine._args].
 func is_arg(arg: StringName) -> bool:
-	return _state_machine.get_arg(arg)
+	return _state_machine.is_arg(arg)

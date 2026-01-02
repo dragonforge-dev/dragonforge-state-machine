@@ -7,6 +7,12 @@
 class_name StateMachine extends Node
 
 
+## Emitted at the end of [method start] method.
+signal started
+
+## Emitted at the end of [method stop] method.
+signal stopped
+
 ## Emitted when [member _current_state] is changed.
 signal state_changed
 
@@ -23,7 +29,7 @@ signal state_changed
 
 ## By default, [State] status changes are printed to the console,
 ## unless this flag is turned off.
-@export var print_state_changes: bool = true
+@export var print_state_changes: bool = false
 
 ## If this value is false, this [StateMachine] will not change states. It is
 ## initially set to true once the [StateMachine] is fully constructed.
@@ -66,9 +72,10 @@ func _on_ready() -> void:
 func initialize() -> void:
 	for state in get_children():
 		if state is State:
-			state._activate_state()
-	self.connect("child_entered_tree", _on_state_added)
-	self.connect("child_exiting_tree", _on_state_removed)
+			if state.activate_on_start: state._activate_state()
+	
+	child_entered_tree.connect(_on_state_added)
+	child_exiting_tree.connect(_on_state_removed)
 
 
 ## Starts the [StateMachine] running. All machines start automatically, but
@@ -76,10 +83,12 @@ func initialize() -> void:
 ## restarted with [method StateMachine.start].
 func start() -> void:
 	if get_child_count() <= 0:
-		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine has no States! Failed to start!" % [subject.name])
+		if print_state_changes:
+			print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine has no States! Failed to start!" % [subject.name])
 		return
 	
 	is_running = true
+	started.emit()
 	
 	if starting_state:
 		_current_state = starting_state
@@ -92,6 +101,7 @@ func start() -> void:
 ## calling [method StateMachine.stop] and restarted with [method StateMachine.start].
 func stop() -> void:
 	is_running = false
+	stopped.emit()
 	
 	if _current_state:
 		_current_state._exit_state() # Run the exit code for the current state. (Even if the state says you can't exit it.)
@@ -105,7 +115,8 @@ func stop() -> void:
 ## 4. The target [State] won't allow a transition to happen because its [member State.can_transition] = false (e.g. cooldown timers).
 func switch_state(state: State) -> void:
 	if not is_running:
-		print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine is off! Cannot enter %s!" % [subject.name, state.name])
+		if print_state_changes:
+			print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine is off! Cannot enter %s!" % [subject.name, state.name])
 		return # The StateMachine is not running.
 	if not _machine_has_state(state): return # The StateMachine does not have the passed state.
 	if _current_state == state: return # The StateMachine is already in that state.
@@ -140,9 +151,8 @@ func _machine_has_state(state: State) -> bool:
 # Accepts all nodes as an argument because this is called whenever a child node
 # enters the tree.
 func _on_state_added(node: Node) -> void:
-	if not node is State:
-		return
-	node._activate_state()
+	if node is State:
+		if node.activate_on_start: node._activate_state()
 
 
 # Deactivates a state.
