@@ -71,8 +71,8 @@ func _on_ready() -> void:
 ## Needs to be called before [method StateMachine.start].
 func initialize() -> void:
 	for state in get_children():
-		if state is State:
-			if state.activate_on_start: state._activate_state()
+		if state is State and state.activate_on_start:
+			state._activate_state()
 	
 	child_entered_tree.connect(_on_state_added)
 	child_exiting_tree.connect(_on_state_removed)
@@ -151,8 +151,8 @@ func _machine_has_state(state: State) -> bool:
 # Accepts all nodes as an argument because this is called whenever a child node
 # enters the tree.
 func _on_state_added(node: Node) -> void:
-	if node is State:
-		if node.activate_on_start: node._activate_state()
+	if node is State and node.activate_on_start:
+		node._activate_state()
 
 
 # Deactivates a state.
