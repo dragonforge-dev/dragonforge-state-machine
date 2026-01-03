@@ -22,7 +22,7 @@ signal state_changed
 ## is triggered calls [method State.switch_state]
 @export var starting_state: State
 
-## By default, the [StateMachine] is started automatically, unless this flag is 
+## By default, the [StateMachine] is started automatically, unless this flag is
 ## turned off. In such case, to start the [StateMachine] manually, both
 ## [method initialize] and [method start] need to be called.
 @export var autostart: bool = true
@@ -63,19 +63,7 @@ func _ready() -> void:
 
 func _on_ready() -> void:
 	if not autostart: return
-	initialize()
 	start()
-
-
-## Initializes signals and activates states.[br]
-## Needs to be called before [method StateMachine.start].
-func initialize() -> void:
-	for state in get_children():
-		if state is State and state.activate_on_start:
-			state._activate_state()
-	
-	child_entered_tree.connect(_on_state_added)
-	child_exiting_tree.connect(_on_state_removed)
 
 
 ## Starts the [StateMachine] running. All machines start automatically, but
@@ -86,6 +74,11 @@ func start() -> void:
 		if print_state_changes:
 			print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine has no States! Failed to start!" % [subject.name])
 		return
+	
+	for state in get_children():
+		if state is State:
+			if state.activate_on_start:
+				state._activate_state()
 	
 	is_running = true
 	started.emit()
@@ -105,6 +98,10 @@ func stop() -> void:
 	
 	if _current_state:
 		_current_state._exit_state() # Run the exit code for the current state. (Even if the state says you can't exit it.)
+	
+	for state in get_children():
+		if state is State:
+			state._deactivate_state()
 
 
 ## Should ideally be called from [method State.switch_state][br][br]
@@ -146,25 +143,6 @@ func _machine_has_state(state: State) -> bool:
 	return false
 
 
-# Activates a state.
-# (Called when a node enters the tree as a child node of this StateMachine.)
-# Accepts all nodes as an argument because this is called whenever a child node
-# enters the tree.
-func _on_state_added(node: Node) -> void:
-	if node is State and node.activate_on_start:
-		node._activate_state()
-
-
-# Deactivates a state.
-# (Called when a child node of this StateMachine leaves the tree.)
-# Accepts all nodes as an argument because this is called whenever a child node
-# exits the tree.
-func _on_state_removed(node: Node) -> void:
-	if not node is State:
-		return
-	node._deactivate_state()
-
-
 ## Adds [param state] as a child to the [StateMachine]
 ## and immediately activates it.
 func add_state(state: State) -> void:
@@ -172,12 +150,16 @@ func add_state(state: State) -> void:
 		add_child(state)
 	else:
 		state.reparent(self)
+	
+	if state.activate_on_start:
+		state._activate_state()
 
 
 ## Removes [param state] from the [StateMachine]
 ## and immediately deactivates it.
 func remove_state(state: State) -> void:
 	if state.get_parent() == self:
+		state._deactivate_state()
 		remove_child(state)
 
 

@@ -10,7 +10,7 @@
 class_name State extends Node
 
 
-## By default, the [State] is activated automatically, unless this flag is 
+## By default, the [State] is activated automatically, unless this flag is
 ## turned off.
 @export var activate_on_start: bool = true
 
@@ -51,7 +51,7 @@ func is_current_state() -> bool:
 
 ## Called when the [State] is added to a [StateMachine].
 ## This should be used for initialization instead of _ready() because it is
-## guaranteed to be run [i]after[/i] all of the nodes that are in the owner's 
+## guaranteed to be run [i]after[/i] all of the nodes that are in the owner's
 ## tree have been constructed - preventing race conditions.
 ## [br][br][color=yellow][b]WARNING:[/b][/color]
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
