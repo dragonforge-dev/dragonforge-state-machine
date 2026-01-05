@@ -1,5 +1,5 @@
 [![Static Badge](https://img.shields.io/badge/Godot%20Engine-4.5.stable-blue?style=plastic&logo=godotengine)](https://godotengine.org/)
-[![License](https://img.shields.io/github/license/myyk/godot-plugin-updater)](https://github.com/dragonforge-dev/dragonforge-state-machine/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/dragonforge-dev/dragonforge-state-machine?logo=mit)](https://github.com/dragonforge-dev/dragonforge-state-machine/blob/main/LICENSE)
 [![GitHub release badge](https://badgen.net/github/release/dragonforge-dev/dragonforge-state-machine/latest)](https://github.com/dragonforge-dev/dragonforge-state-machine/releases/latest)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dragonforge-dev/dragonforge-state-machine)](https://img.shields.io/github/languages/code-size/dragonforge-dev/dragonforge-state-machine)
 
