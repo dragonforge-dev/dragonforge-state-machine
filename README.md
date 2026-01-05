@@ -15,7 +15,7 @@ For use with **Godot 4.5.stable** and later.
 # Usage Instructions
 To use the **StateMachine** and **State** classes, you add a **StateMachine** to the **Node** you want it to control. Then you add a **State** node to the **StateMachine** for each state that you want the object to have.
 
-## State Machine
+## State Machine <img src="/assets/textures/readme/state_machine_64x64_grey.png" width="32" alt="State Machine Icon"/>
 1. Add a new node as you would normally. (The **Create New Node** window will appear.)
 2. Type `state` into the Search box.
 3. Select **StateMachine**.
@@ -50,7 +50,7 @@ As such, even though there are public methods and variables, they are meant to o
 - `remove_arg(arg: StringName) -> void` Removes an argument **arg** from the **_args** **Dictionary**.
 - `is_arg(arg: StringName) -> bool` Returns an argument **arg** from the **_args** **Dictionary**, or `false` if the argument doesn't exist in `_args`.
 
-## State <img src="/addons/dragonforge_state_machine/assets/textures/icons/state_icon_64x64_white.png" width="32" alt="State Icon"/>
+## State <img src="/assets/textures/readme/state_icon_64x64_grey.png" width="32" alt="State Icon"/>
 ### Public Member Variables
 - `can_transition = true` Set to false if this [State] cannot be transitioned to (or alternately, from). For example when waiting for a cooldown timer to expire, when a character is dead, or when the splash screens have been completed.
 
