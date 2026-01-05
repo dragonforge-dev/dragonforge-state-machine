@@ -151,7 +151,7 @@ func add_state(state: State) -> void:
 	else:
 		state.reparent(self)
 	
-	if state.activate_on_start:
+	if is_running and state.activate_on_start:
 		state._activate_state()
 
 
