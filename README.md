@@ -3,7 +3,7 @@
 [![GitHub release badge](https://badgen.net/github/release/dragonforge-dev/dragonforge-state-machine/latest)](https://github.com/dragonforge-dev/dragonforge-state-machine/releases/latest)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dragonforge-dev/dragonforge-state-machine)](https://img.shields.io/github/languages/code-size/dragonforge-dev/dragonforge-state-machine)
 
-# Dragonforge State Machine <img src="/addons/dragonforge_state_machine/assets/textures/icons/state_machine_64x64.png" width="32" alt="State Machine Icon"/>
+# Dragonforge State Machine <img src="/assets/textures/readme/state_machine_64x64_grey.png" width="32" alt="State Machine Icon"/>
 A base state machine class to be used in games.
 # Version 0.5
 For use with **Godot 4.5.stable** and later.
@@ -21,14 +21,14 @@ To use the **StateMachine** and **State** classes, you add a **StateMachine** to
 3. Select **StateMachine**.
 4. Click the **Create** button.
 
-## State <img src="/addons/dragonforge_state_machine/assets/textures/icons/state_icon_64x64_white.png" width="32" alt="State Icon"/>
+## State <img src="/assets/textures/readme/state_icon_64x64_grey.png" width="32" alt="State Icon"/>
 1. Add a new node as you would normally. (The **Create New Node** window will appear.)
 2. Type `state` into the Search box.
 3. Select **State**.
 4. Click the **Create** button.
 
 # Class Descriptions
-## StateMachine <img src="/addons/dragonforge_state_machine/assets/textures/icons/state_machine_64x64.png" width="32" alt="State Machine Icon"/>
+## StateMachine <img src="/assets/textures/readme/state_machine_64x64_grey.png" width="32" alt="State Machine Icon"/>
 While there are a number of public functions, this class is not intended to be changed or operated directly. All state switching happens from the **State** class.
 
 This state machine is intended to be a "pull" machine instead of a "push" machine. Based on the Kanban principle of only pulling work when it's available. This means that instead of the **StateMachine** telling classes when they take over, the **State** class is implemented to tell the **StateMachine** when it wants to start up. This means that all the logic for switching is stored in the **State**. This keeps states modular, and means you can add or remove them from a **StateMachine** without breaking anything or having to rewrite code.
