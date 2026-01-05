@@ -15,3 +15,7 @@ config/description="A base state machine class to be used in games."
 config/version="0.5"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://21nwk3mbrenq"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=1
