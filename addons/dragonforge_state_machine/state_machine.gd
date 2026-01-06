@@ -104,7 +104,7 @@ func stop() -> void:
 		_current_state._exit_state() # Run the exit code for the current state. (Even if the state says you can't exit it.)
 	
 	for state in get_children():
-		if state is State and state.is_activated:
+		if state is State:
 			state._deactivate_state()
 
 
@@ -163,8 +163,7 @@ func add_state(state: State) -> void:
 ## and immediately deactivates it.
 func remove_state(state: State) -> void:
 	if state.get_parent() == self:
-		if state.is_activated:
-			state._deactivate_state()
+		state._deactivate_state()
 		remove_child(state)
 
 

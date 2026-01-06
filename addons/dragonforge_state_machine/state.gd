@@ -73,6 +73,7 @@ func _activate_state() -> void:
 ## [br]When overriding, be sure to call [method super] on the first line of your method.
 ## [br][i]Never[/i] call this method directly. It should only be used by the [StateMachine]
 func _deactivate_state() -> void:
+	if not is_activated: return
 	is_activated = false
 	if _state_machine.print_state_changes:
 		print_rich("[color=#d42c2a][b]Deactivate[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=#d42c2a]%s[/color]" % [_subject_name, _state_machine_name, self.name])
