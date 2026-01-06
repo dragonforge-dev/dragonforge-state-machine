@@ -70,6 +70,8 @@ func _on_ready() -> void:
 ## they can be stopped at any time by calling [method StateMachine.stop] and
 ## restarted with [method StateMachine.start].
 func start() -> void:
+	if is_running: return
+	
 	if get_child_count() <= 0:
 		if print_state_changes:
 			print_rich("[color=red][b]ERROR[/b][/color]: %s State Machine has no States! Failed to start!" % [subject.name])
