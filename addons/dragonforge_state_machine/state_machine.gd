@@ -93,6 +93,10 @@ func start() -> void:
 ## All machines start automatically, but they can be stopped at any time by
 ## calling [method StateMachine.stop] and restarted with [method StateMachine.start].
 func stop() -> void:
+	if not is_running:
+		autostart = false
+		return
+	
 	is_running = false
 	stopped.emit()
 	
