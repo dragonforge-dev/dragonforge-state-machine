@@ -1,12 +1,12 @@
-[![Static Badge](https://img.shields.io/badge/Godot%20Engine-4.5.stable-blue?style=plastic&logo=godotengine)](https://godotengine.org/)
+[![Static Badge](https://img.shields.io/badge/Godot%20Engine-4.6.stable-blue?style=plastic&logo=godotengine)](https://godotengine.org/)
 [![License](https://img.shields.io/github/license/dragonforge-dev/dragonforge-state-machine?logo=mit)](https://github.com/dragonforge-dev/dragonforge-state-machine/blob/main/LICENSE)
 [![GitHub release badge](https://badgen.net/github/release/dragonforge-dev/dragonforge-state-machine/latest)](https://github.com/dragonforge-dev/dragonforge-state-machine/releases/latest)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dragonforge-dev/dragonforge-state-machine)](https://img.shields.io/github/languages/code-size/dragonforge-dev/dragonforge-state-machine)
 
 # Dragonforge State Machine <img src="/assets/textures/readme/state_machine_64x64_grey.png" width="32" alt="State Machine Icon"/>
 A base state machine class to be used in games.
-# Version 0.5
-For use with **Godot 4.5.stable** and later.
+# Version 0.6
+For use with **Godot 4.6.stable** and later.
 # Installation Instructions
 1. Copy the `dragonforge_state_machine` folder from the `addons` folder into your project's `addons` folder.
 2. In your project go to **Project -> Reload Current Project**
