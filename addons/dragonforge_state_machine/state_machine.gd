@@ -13,12 +13,10 @@ signal state_changed
 ## case the [StateMachine] will typically transition when the first [State] that
 ## is triggered calls [method State.switch_state]
 @export var starting_state: State
-
 ## By default, the [StateMachine] is started automatically, unless this flag is 
 ## turned off. In such case, to start the [StateMachine] manually, both
 ## [method initialize] and [method start] need to be called.
 @export var autostart: bool = true
-
 ## By default, [State] status changes are printed to the console,
 ## unless this flag is turned off.
 @export var print_state_changes: bool = true
@@ -28,9 +26,6 @@ signal state_changed
 var is_running = false
 ## The node to which this [StateMachine] is attached and operates on.
 var subject: Node
-
-# Holds arguments that can be used for communication between States.
-var _args: Dictionary[StringName, bool]
 
 # The current State of the StateMachine. Initially defaults to the first node it
 # finds beneath itself if starting_state is not defined.
@@ -90,9 +85,7 @@ func start() -> void:
 ## calling [method StateMachine.stop] and restarted with [method StateMachine.start].
 func stop() -> void:
 	is_running = false
-	
-	if _current_state:
-		_current_state._exit_state() # Run the exit code for the current state. (Even if the state says you can't exit it.)
+	clear_state()
 
 
 ## Should ideally be called from [method State.switch_state][br][br]
@@ -123,6 +116,17 @@ func switch_state(state: State) -> void:
 func is_current_state(state: State) -> bool:
 	return _current_state == state
 
+
+## Should ideally be called from [method State.clear_state][br][br]
+## Exits, then clears the current state and sets [member State.can_transition]
+## to true for that state.
+func clear_state() -> void:
+	if _current_state:
+		_current_state.can_transition = true #Reset this so we don't get frozen out of the state if it's set to false
+		_current_state._exit_state() # Run the exit code for the current state. (Even if the state says you can't exit it.)
+		_current_state = null
+
+
 ## Adds [param state] as a child to the [StateMachine]
 ## and immediately activates it.
 func add_state(state: State) -> void:
@@ -137,24 +141,6 @@ func add_state(state: State) -> void:
 func remove_state(state: State) -> void:
 	if state.get_parent() == self:
 		remove_child(state)
-
-
-## Adds an argument [param arg] to the [member _args] [Dictionary]
-## with value [param value] that can be used for communication
-## between [State]s.
-func set_arg(arg: StringName, value: bool = true) -> void:
-	_args[arg] = value
-
-
-## Removes an argument [param arg] from the [member _args] [Dictionary].
-func remove_arg(arg: StringName) -> void:
-	_args.erase(arg)
-
-
-## Returns an argument [param arg] from the [member _args] [Dictionary],
-## or [code]false[/code] if the argument doesn't exist in the [member _args].
-func is_arg(arg: StringName) -> bool:
-	return _args.get(arg, false)
 
 
 # Returns whether or not the StateMachine has this state.

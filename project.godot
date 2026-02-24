@@ -14,9 +14,9 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Dragonforge State Machine v0.6.1"
+config/name="Dragonforge State Machine v1.0"
 config/description="A base state machine class to be used in games."
-config/version="0.6.1"
+config/version="1.0"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="uid://21nwk3mbrenq"
 
