@@ -103,4 +103,4 @@ func remove_arg(arg: StringName) -> void:
 ## [Dictionary], or [code]false[/code] if the argument doesn't exist
 ## in the [member StateMachine._args].
 func is_arg(arg: StringName) -> bool:
-	return _state_machine.get_arg(arg)
+	return _state_machine.is_arg(arg)
