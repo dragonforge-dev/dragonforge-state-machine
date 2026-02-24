@@ -23,3 +23,7 @@ config/icon="uid://21nwk3mbrenq"
 [debug]
 
 gdscript/warnings/untyped_declaration=1
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
