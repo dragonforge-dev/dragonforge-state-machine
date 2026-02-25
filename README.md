@@ -5,12 +5,14 @@
 
 # Dragonforge State Machine <img src="/assets/textures/readme/state_machine_64x64_grey.png" width="32" alt="State Machine Icon"/>
 A base state machine class to be used in games.
-# Version 0.6.1
+# Version 1.0
 For use with **Godot 4.6.stable** and later.
 # Installation Instructions
 1. Copy the `dragonforge_state_machine` folder from the `addons` folder into your project's `addons` folder.
 2. In your project go to **Project -> Reload Current Project**
 3. Wait for the project to reload.
+
+**NOTE:** The `set_arg()`, `remove_arg()`, and `is_arg()` functions have been removed as of v1.0. This is a breaking change.
 
 # Usage Instructions
 To use the **StateMachine** and **State** classes, you add a **StateMachine** to the **Node** you want it to control. Then you add a **State** node to the **StateMachine** for each state that you want the object to have.
@@ -46,9 +48,6 @@ As such, even though there are public methods and variables, they are meant to o
 ### Public Functions
 - `add_state(state: State) -> void` Adds **state** as a child to the **StateMachine** and immediately activates it.
 - `remove_state(state: State) -> void` Removes **state** from the **StateMachine** and immediately deactivates it.
-- `set_arg(arg: StringName, value: bool = true) -> void` Adds an argument **arg** to the **_args** **Dictionary** with **value** that can be used for communication between **State**s.
-- `remove_arg(arg: StringName) -> void` Removes an argument **arg** from the **_args** **Dictionary**.
-- `is_arg(arg: StringName) -> bool` Returns an argument **arg** from the **_args** **Dictionary**, or `false` if the argument doesn't exist in `_args`.
 
 ## State <img src="/assets/textures/readme/state_icon_64x64_grey.png" width="32" alt="State Icon"/>
 ### Public Member Variables
@@ -58,10 +57,16 @@ As such, even though there are public methods and variables, they are meant to o
 Though public, typically these functions are used inside the **State** itself.
 - `switch_state() -> void` Asks the state machine to switch to this [State]. Should always be used instead of _enter_state() when a [State] wants to switch to itself.
 - `is_current_state() -> bool` Returns true if this is the current [State].
+- `clear_state() -> void` Asks the [StateMachine] to exit this [State] if it is the current [State]. Should always be used instead of calling _exit_state() when a [State] wants to exit. Will fail if the current [State] is not this one.
+- `get_current_state() -> State` Returns the [StateMachine]'s current [State]. Intended for type checking. E.G. if you wanted to only switch to a custom **JumpState** state when the "jump" action is pressed and the player is not in a custom **FallState**, as long as the FallState had **class_name FallState** at the top of the script, you could write:
+```
+ func _process(delta: float) -> void:
+ 	if Input.is_action_just_pressed("jump") and not get_current_state() is FallState:
+ 		switch_state()
+```
 
 ### Private Override Functions
 To implement a State, there are four functions you typically override. Sometimes you only need one or two. Sometimes you need all five. Whenever you override any of these functions, the first line of your override function should be to call `super()`. This ensures that the logging code runs, but forgetting to do it can cause the **State** to malfunction and weird bugs to occur. Note that none of these functions should be called directly in code. The **StateMachine** will call them at the appropriate time.
-
 - `_ready() -> void` Turns off the _process(), _phsyics_process(), _input() and _unhandled_input() functions. If you want to use them for a [State] you can turn them on in the _activate_state() function, or turned on and off in _enter_state() and _exit_state(). **NOTE:** Although typically you override this function in Godot, that code should be moved to the `_activate_state()` function for **State** nodes.
 - `_activate_state() -> void` Called when the [State] is added to a [StateMachine]. This should be used for initialization instead of `_ready()` because it is guaranteed to be run _after_ all of the nodes that are in the owner's tree have been constructed - preventing race conditions. <span style="color:yellow">**WARNING:**</span> When overriding, be sure to call `super()` on the first line of your method. _Never_ call this method directly. It should only be used by the [StateMachine].
 - `_deactivate_state() -> void` Called when a [State] is removed from a [StateMachine]. <span style="color:yellow">**WARNING:**</span> When overriding, be sure to call `super()` on the first line of your method. _Never_ call this method directly. It should only be used by the [StateMachine].
