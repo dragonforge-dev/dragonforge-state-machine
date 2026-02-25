@@ -5,7 +5,7 @@
 
 # Dragonforge State Machine <img src="/assets/textures/readme/state_machine_64x64_grey.png" width="32" alt="State Machine Icon"/>
 A base state machine class to be used in games.
-# Version 1.0
+# Version 1.0.1
 For use with **Godot 4.6.stable** and later.
 # Installation Instructions
 1. Copy the `dragonforge_state_machine` folder from the `addons` folder into your project's `addons` folder.
