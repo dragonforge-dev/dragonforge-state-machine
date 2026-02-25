@@ -106,23 +106,3 @@ func _enter_state() -> void:
 func _exit_state() -> void:
 	if _state_machine.print_state_changes:
 		print_rich("[color=dark_orange][b]Exit[/b][/color] [color=gold][b]%s[/b][/color] [color=ivory]%s State:[/color] [color=dark_orange]%s[/color]" % [_subject_name, _state_machine_name, self.name])
-
-
-## Adds an argument [param arg] to the [member StateMachine._args] [Dictionary]
-## with value [param value] that can be used for communication
-## between [State]s.
-func set_arg(arg: StringName, value: bool = true) -> void:
-	_state_machine.set_arg(arg, value)
-
-
-## Removes an argument [param arg] from the [member StateMachine._args]
-## [Dictionary].
-func remove_arg(arg: StringName) -> void:
-	_state_machine.remove_arg(arg)
-
-
-## Returns an argument [param arg] from the [member StateMachine._args]
-## [Dictionary], or [code]false[/code] if the argument doesn't exist
-## in the [member StateMachine._args].
-func is_arg(arg: StringName) -> bool:
-	return _state_machine.is_arg(arg)
