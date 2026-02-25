@@ -5,7 +5,7 @@
 
 # Dragonforge State Machine <img src="/assets/textures/readme/state_machine_64x64_grey.png" width="32" alt="State Machine Icon"/>
 A base state machine class to be used in games.
-# Version 1.0.1
+# Version 1.1
 For use with **Godot 4.6.stable** and later.
 # Installation Instructions
 1. Copy the `dragonforge_state_machine` folder from the `addons` folder into your project's `addons` folder.
@@ -48,6 +48,13 @@ As such, even though there are public methods and variables, they are meant to o
 ### Public Functions
 - `add_state(state: State) -> void` Adds **state** as a child to the **StateMachine** and immediately activates it.
 - `remove_state(state: State) -> void` Removes **state** from the **StateMachine** and immediately deactivates it.
+- `get_current_state() -> State` Returns the [StateMachine]'s current [State]. Intended for type checking. E.G. if you wanted to switch the direction a player faces during a custom **WallSlideState** state, as long as the WallSlideState has **class_name WallSlideState** at the top of the script, you could write:
+```
+@onready var state_machine: StateMachine = $StateMachine
+func _process(delta: float) -> void:
+	if state_machine.get_current_state() is WallSlideState:
+		new_horizontal_facing *= -1.0
+```
 
 ## State <img src="/assets/textures/readme/state_icon_64x64_grey.png" width="32" alt="State Icon"/>
 ### Public Member Variables

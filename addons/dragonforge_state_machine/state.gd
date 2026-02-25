@@ -63,7 +63,7 @@ func is_current_state() -> bool:
 ## 		switch_state()
 ## [/codeblock]
 func get_current_state() -> State:
-	return _state_machine._current_state
+	return _state_machine.get_current_state()
 
 
 ## Called when the [State] is added to a [StateMachine].

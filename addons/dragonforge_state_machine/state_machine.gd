@@ -117,6 +117,21 @@ func is_current_state(state: State) -> bool:
 	return _current_state == state
 
 
+## Returns the [StateMachine]'s current [State]. Intended for type checking.
+## E.G. if you wanted to switch the direction a player faces during a custom
+## [b]WallSlideState[/b] state, as long as the WallSlideState has
+## [b]class_name WallSlideState[/b] at the top of the script, you could write:
+## [codeblock]
+## @onready var state_machine: StateMachine = $StateMachine
+##
+## func _process(delta: float) -> void:
+## 	if state_machine.get_current_state() is WallSlideState:
+## 		new_horizontal_facing *= -1.0
+## [/codeblock]
+func get_current_state() -> State:
+	return _current_state
+
+
 ## Should ideally be called from [method State.clear_state][br][br]
 ## Exits, then clears the current state and sets [member State.can_transition]
 ## to true for that state.
